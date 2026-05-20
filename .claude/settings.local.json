@@ -9,7 +9,11 @@
       "Bash(curl -s http://localhost:5173/src/App.tsx)",
       "Bash(echo 'node_modules/ *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(gh repo *)",
+      "Bash(Select-String -Path \"c:\\\\GitHub\\\\ElektronikHaberlesmeDersCalis\\\\src\\\\pages\\\\AADevre.tsx\" -Pattern \"useEffect|markCompleted\")",
+      "Bash(Select-Object LineNumber, Line)"
     ]
   }
 }
