@@ -5,7 +5,7 @@ import PageHeader from '../components/ui/PageHeader'
 import { PlainCard } from '../components/ui/Card'
 import Slider from '../components/ui/Slider'
 import Glossary from '../components/ui/Glossary'
-import { markCompleted } from '../lib/progress'
+import CompleteButton from '../components/ui/CompleteButton'
 
 export default function AdcDac() {
   const [amp, setAmp] = useState(0.8) // 0-1
@@ -13,10 +13,6 @@ export default function AdcDac() {
   const [bits, setBits] = useState(4)
   const [samples, setSamples] = useState(16) // samples per visible window
   const [t, setT] = useState(0)
-
-  useEffect(() => {
-    markCompleted('adc-dac')
-  }, [])
 
   useEffect(() => {
     const id = window.setInterval(() => setT((x) => x + 0.04), 60)
@@ -198,6 +194,7 @@ export default function AdcDac() {
           { term: 'LPF (rekonstrüksiyon filtresi)', def: 'DAC çıkışındaki merdiveni yumuşatan alçak geçiren filtre. Örnekleme frekansının üstünü kısar.' },
         ]}
       />
+      <CompleteButton topicId="adc-dac" />
     </div>
   )
 }

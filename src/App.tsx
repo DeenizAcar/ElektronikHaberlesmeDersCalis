@@ -13,6 +13,7 @@ const Alarm = lazy(() => import('./pages/Alarm'))
 const AdcDac = lazy(() => import('./pages/AdcDac'))
 const Notlar = lazy(() => import('./pages/Notlar'))
 const Quiz = lazy(() => import('./pages/Quiz'))
+const Admin = lazy(() => import('./pages/Admin'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
                 <Route path="/adc-dac" element={<AdcDac />} />
                 <Route path="/notlar" element={<Notlar />} />
                 <Route path="/quiz" element={<Quiz />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </motion.div>

@@ -7,15 +7,12 @@ import Slider from '../components/ui/Slider'
 import SevenSegment from '../components/simulators/SevenSegment'
 import { segmentsForValue } from '../data/segmentTable'
 import Glossary from '../components/ui/Glossary'
-import { markCompleted } from '../lib/progress'
+import CompleteButton from '../components/ui/CompleteButton'
 
 type Tab = 'decade' | 'updown' | 'relay'
 
 export default function Sayicilar() {
   const [tab, setTab] = useState<Tab>('decade')
-  useEffect(() => {
-    markCompleted('sayicilar')
-  }, [])
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <PageHeader
@@ -53,6 +50,7 @@ export default function Sayicilar() {
           { term: 'Time relay', def: 'Tetiklendikten sonra ayarlı süre sonra çıkışı aktive eden (on-delay) ya da kapatan (off-delay) röle.' },
         ]}
       />
+      <CompleteButton topicId="sayicilar" />
     </div>
   )
 }

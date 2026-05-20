@@ -1,21 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ArrowLeftRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import PageHeader from '../components/ui/PageHeader'
 import { PlainCard } from '../components/ui/Card'
 import Toggle from '../components/ui/Toggle'
 import Glossary from '../components/ui/Glossary'
-import { markCompleted } from '../lib/progress'
+import CompleteButton from '../components/ui/CompleteButton'
 
 export default function Mux() {
   const [inputs, setInputs] = useState<boolean[]>(Array(8).fill(false))
   const [select, setSelect] = useState<[boolean, boolean, boolean]>([false, false, false]) // S2, S1, S0
   const selectVal = (select[0] ? 4 : 0) + (select[1] ? 2 : 0) + (select[2] ? 1 : 0)
   const output = inputs[selectVal]
-
-  useEffect(() => {
-    markCompleted('mux')
-  }, [])
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
@@ -205,6 +201,7 @@ export default function Mux() {
           { term: 'Decoder', def: 'n bit binary girişi 2ⁿ çıkıştan birini "1" yapacak şekilde çözer. MUX\'un içinde gizli kullanılır.' },
         ]}
       />
+      <CompleteButton topicId="mux" />
     </div>
   )
 }

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Zap, Hash, ArrowLeftRight, Clock, Bell, Activity } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { getCompleted } from '../lib/progress'
+import { getCompleted, getStats, type PeriodStats } from '../lib/progress'
 
 const topics = [
   {
@@ -49,10 +49,51 @@ const topics = [
   },
 ]
 
+type StatCell = { label: string; value: number; color: string }
+
+function statCells(s: PeriodStats): StatCell[] {
+  const total = s.quizCorrect + s.quizWrong
+  const rate = total > 0 ? Math.round((s.quizCorrect / total) * 100) : null
+  return [
+    { label: 'Tamamlanan', value: s.uniqueTopics, color: 'text-mint-500' },
+    { label: 'Quiz doğru', value: s.quizCorrect, color: 'text-lavender-500' },
+    { label: 'Doğruluk', value: rate ?? 0, color: rate !== null ? 'text-blush-500' : 'text-inkSoft' },
+  ]
+}
+
+function StatCard({ title, stats }: { title: string; stats: PeriodStats }) {
+  const cells = statCells(stats)
+  const total = stats.quizCorrect + stats.quizWrong
+  return (
+    <div className="card-soft p-4 flex-1 min-w-[130px]">
+      <p className="text-xs font-bold text-inkSoft uppercase tracking-wider mb-3">{title}</p>
+      <div className="space-y-2">
+        {cells.map((c) => (
+          <div key={c.label} className="flex items-center justify-between gap-2">
+            <span className="text-xs text-inkSoft">{c.label}</span>
+            <span className={`text-sm font-bold ${c.color}`}>
+              {c.label === 'Doğruluk'
+                ? total > 0 ? `${c.value}%` : '—'
+                : c.value}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const [count, setCount] = useState(0)
+  const [today, setToday] = useState<PeriodStats>({ completions: 0, quizCorrect: 0, quizWrong: 0, uniqueTopics: 0 })
+  const [week, setWeek] = useState<PeriodStats>({ completions: 0, quizCorrect: 0, quizWrong: 0, uniqueTopics: 0 })
+  const [month, setMonth] = useState<PeriodStats>({ completions: 0, quizCorrect: 0, quizWrong: 0, uniqueTopics: 0 })
+
   useEffect(() => {
     setCount(getCompleted().length)
+    setToday(getStats('today'))
+    setWeek(getStats('week'))
+    setMonth(getStats('month'))
   }, [])
 
   return (
@@ -127,19 +168,27 @@ export default function Home() {
         })}
       </section>
 
-      {/* Alt bant */}
-      <section className="mt-8 sm:mt-12 flex flex-wrap items-center justify-between gap-3">
-        <div className="card-soft px-5 py-3 inline-flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-mint-100 flex items-center justify-center">
-            <span className="font-bold text-mint-500">{count}</span>
+      {/* Stats */}
+      <section className="mt-8 sm:mt-12">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div className="card-soft px-5 py-3 inline-flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-mint-100 flex items-center justify-center">
+              <span className="font-bold text-mint-500">{count}</span>
+            </div>
+            <p className="text-sm text-inkSoft">
+              <span className="font-bold text-ink">{count}</span> / 6 konu tamamlandı
+            </p>
           </div>
-          <p className="text-sm text-inkSoft">
-            <span className="font-bold text-ink">{count}</span> konu tamamlandı
-          </p>
+          <div className="flex gap-2">
+            <Link to="/notlar" className="btn-ghost text-sm">📓 Notlar</Link>
+            <Link to="/quiz" className="btn-primary text-sm">Quiz →</Link>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <Link to="/notlar" className="btn-ghost text-sm">📓 Notlar</Link>
-          <Link to="/quiz" className="btn-primary text-sm">Quiz →</Link>
+
+        <div className="flex flex-wrap gap-3">
+          <StatCard title="Bugün" stats={today} />
+          <StatCard title="Bu Hafta" stats={week} />
+          <StatCard title="Bu Ay" stats={month} />
         </div>
       </section>
     </div>

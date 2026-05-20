@@ -7,7 +7,7 @@ import SevenSegment from '../components/simulators/SevenSegment'
 import Confetti from '../components/ui/Confetti'
 import Glossary from '../components/ui/Glossary'
 import { segmentTable, segmentsForValue, glyphForValue } from '../data/segmentTable'
-import { markCompleted } from '../lib/progress'
+import CompleteButton from '../components/ui/CompleteButton'
 
 export default function Segment() {
   // A = LSB, D = MSB
@@ -39,10 +39,6 @@ export default function Segment() {
       }
     }
   }, [value, quiz])
-
-  useEffect(() => {
-    markCompleted('segment')
-  }, [])
 
   const startQuiz = () => {
     setStreak(0)
@@ -204,6 +200,7 @@ export default function Segment() {
           { term: 'Hex (onaltılık)', def: 'Tabanı 16 olan sayı sistemi. 0-9 sonrasında A-F harfleri devam eder.' },
         ]}
       />
+      <CompleteButton topicId="segment" />
     </div>
   )
 }

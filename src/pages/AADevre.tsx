@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Zap } from 'lucide-react'
 import PageHeader from '../components/ui/PageHeader'
 import Oscilloscope from '../components/simulators/Oscilloscope'
@@ -7,7 +7,7 @@ import SeriesRC from '../components/simulators/SeriesRC'
 import Resonance from '../components/simulators/Resonance'
 import Filter from '../components/simulators/Filter'
 import Glossary from '../components/ui/Glossary'
-import { markCompleted } from '../lib/progress'
+import CompleteButton from '../components/ui/CompleteButton'
 
 type Deney = {
   id: string
@@ -89,10 +89,6 @@ export default function AADevre() {
   const [active, setActive] = useState(deneyler[0].id)
   const current = deneyler.find((d) => d.id === active)!
 
-  useEffect(() => {
-    markCompleted('aa-devre')
-  }, [])
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <PageHeader
@@ -161,6 +157,7 @@ export default function AADevre() {
               { term: 'Kesim frekansı', def: 'Çıkış gerilimi giriş gerilimin 1/√2\'sine (-3 dB) düştüğü frekans.' },
             ]}
           />
+          <CompleteButton topicId="aa-devre" />
         </section>
       </div>
     </div>

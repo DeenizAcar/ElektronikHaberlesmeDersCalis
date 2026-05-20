@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import PageHeader from '../components/ui/PageHeader'
 import { PlainCard } from '../components/ui/Card'
 import Glossary from '../components/ui/Glossary'
-import { markCompleted } from '../lib/progress'
+import CompleteButton from '../components/ui/CompleteButton'
 
 type State = 'idle' | 'arming' | 'armed' | 'triggered' | 'alarm' | 'disarmed'
 
@@ -13,10 +13,6 @@ export default function Alarm() {
   const [countdown, setCountdown] = useState(0)
   const stateRef = useRef(state)
   stateRef.current = state
-
-  useEffect(() => {
-    markCompleted('alarm')
-  }, [])
 
   useEffect(() => {
     if (state !== 'arming' && state !== 'triggered') return
@@ -190,6 +186,7 @@ export default function Alarm() {
           { term: 'Retriggerable', def: 'Süre dolmadan tekrar tetiklenirse sayacın baştan başlaması. Hareket sensörlerinde sürekli tetikleme gerekirse kullanışlı.' },
         ]}
       />
+      <CompleteButton topicId="alarm" />
     </div>
   )
 }

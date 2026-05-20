@@ -6,6 +6,7 @@ import { PlainCard } from '../components/ui/Card'
 import Confetti from '../components/ui/Confetti'
 import { questions, topicLabels, Question } from '../data/quizQuestions'
 import { quizPraise, quizGentle } from '../data/messages'
+import { logActivity } from '../lib/progress'
 
 type Filter = Question['topic'] | 'all'
 
@@ -51,9 +52,11 @@ export default function Quiz() {
       setPraise(quizPraise[Math.floor(Math.random() * quizPraise.length)])
       setConfetti(true)
       setTimeout(() => setConfetti(false), 1600)
+      logActivity('quiz_correct', current.topic)
     } else {
       setPraise(quizGentle[Math.floor(Math.random() * quizGentle.length)])
       setWrongTopics((w) => ({ ...w, [current.topic]: (w[current.topic] ?? 0) + 1 }))
+      logActivity('quiz_wrong', current.topic)
     }
   }
   const next = () => {
