@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-body text-ink bg-cream antialiased;
+    background-image:
+      radial-gradient(at 8% 12%, rgba(248, 180, 204, 0.25) 0px, transparent 50%),
+      radial-gradient(at 92% 14%, rgba(191, 168, 228, 0.22) 0px, transparent 50%),
+      radial-gradient(at 50% 95%, rgba(176, 222, 247, 0.20) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+  ::selection {
+    background: #FBCFE0;
+    color: #3D3654;
+  }
+}
+
+@layer components {
+  .card-soft {
+    @apply bg-white/80 backdrop-blur-sm rounded-3xl shadow-soft border border-white/60;
+  }
+  .btn-pill {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all duration-200 active:scale-95;
+  }
+  .btn-primary {
+    @apply btn-pill bg-blush-300 text-ink hover:bg-blush-400 hover:shadow-soft-blush;
+  }
+  .btn-ghost {
+    @apply btn-pill bg-white/70 text-ink hover:bg-white border border-white;
+  }
+  .chip {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+  .formula {
+    @apply font-mono text-sm bg-lavender-50 text-ink px-3 py-2 rounded-xl inline-block border border-lavender-100;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Blob arka plan dekoru */
+.bg-blobs::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side at 15% 25%, rgba(248, 180, 204, 0.35), transparent),
+    radial-gradient(closest-side at 85% 30%, rgba(191, 168, 228, 0.30), transparent),
+    radial-gradient(closest-side at 75% 80%, rgba(148, 221, 184, 0.22), transparent);
+  filter: blur(40px);
+  z-index: -1;
+}

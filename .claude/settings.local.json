@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npm create *)",
+      "Bash(npx tsc *)",
+      "Bash(npx vite *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} · %{size_download} bytes\\\\n\" http://localhost:5173/)",
+      "Bash(curl -s http://localhost:5173/src/App.tsx)",
+      "Bash(echo 'node_modules/ *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

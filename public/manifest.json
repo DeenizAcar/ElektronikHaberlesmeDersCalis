@@ -1,0 +1,18 @@
+{
+  "name": "Devreleri Anla",
+  "short_name": "DevreLab",
+  "description": "Elektronik Haberleşme Teknolojisi laboratuvar deneyleri ve dijital proje konuları",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFBF5",
+  "theme_color": "#F8B4CC",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Devreleri Anla — Elektronik Haberleşme dersini mantığıyla anlatan interaktif çalışma sitesi" />
+    <!-- PWA / Ana ekrana ekle -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="DevreLab" />
+    <meta name="theme-color" content="#F8B4CC" />
+    <!-- GitHub Pages SPA yönlendirme alıcısı -->
+    <script>
+      (function(){var p=window.location.search[1];if(p!==undefined){var q=p.slice(2).split('&').reduce(function(a,b){var c=b.split('=');a[c[0]]=c.slice(1).join('=').replace(/~and~/g,'&');return a},{});if(q.p!==undefined){window.history.replaceState(null,null,
+        window.location.pathname.slice(0,window.location.pathname.indexOf('/',1)+1)+
+        (q.p||'')+
+        (q.q?'?'+q.q:'')+(q.h?'#'+q.h:''));}}})();
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>Devreleri Anla · Mantığıyla Öğren</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
