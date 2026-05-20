@@ -5,6 +5,8 @@ import PageHeader from '../components/ui/PageHeader'
 import { PlainCard } from '../components/ui/Card'
 import Glossary from '../components/ui/Glossary'
 import CompleteButton from '../components/ui/CompleteButton'
+import CircuitPanel from '../components/circuit/CircuitPanel'
+import { AlarmSchematic } from '../components/circuit/AlarmCircuit'
 
 type State = 'idle' | 'arming' | 'armed' | 'triggered' | 'alarm' | 'disarmed'
 
@@ -69,6 +71,33 @@ export default function Alarm() {
         subtitle="Exit delay ile çıkış için 20 saniye, entry delay ile içeri giren kişinin şifre girmesi için 10 saniye. Süre dolarsa alarm."
         icon={<Bell className="w-6 h-6" />}
         accent="sky"
+      />
+
+      <CircuitPanel
+        materials={[
+          { name: 'NE555 Timer IC', value: 'Monostable mod', qty: 2 },
+          { name: 'Röle', value: '5V DC, SPDT', qty: 1 },
+          { name: 'Buzzer', value: '5V aktif piezo', qty: 1 },
+          { name: 'LED', value: 'Kırmızı 5mm', qty: 2 },
+          { name: 'Push Button', value: 'NO (Normalde Açık)', qty: 2 },
+          { name: 'Direnç', value: '2 MΩ (#1 exit delay)', qty: 1 },
+          { name: 'Direnç', value: '1 MΩ (#2 entry delay)', qty: 1 },
+          { name: 'Direnç', value: '10 kΩ, 1 kΩ', qty: 4 },
+          { name: 'Elektrolitik Kapasitör', value: '10 µF 16V', qty: 2 },
+          { name: 'Breadboard + Jumper', value: '830 delik', qty: 1 },
+          { name: 'Güç Kaynağı', value: '+5V DC', qty: 1 },
+        ]}
+        steps={[
+          'İki NE555\'i breadboard\'a yan yana yerleştir; her birinin pin 8\'ini +5V, pin 1\'ini GND\'e bağla.',
+          '555 #1 (exit delay): pin 2 (Trig) butona bağla; R=2MΩ, C=10µF ile t=1.1RC≈22sn gecikmesi ayarla.',
+          'RC hesabı: pin 6 ve 7\'yi birbirine bağla, oradan R ile +5V\'a, C ile GND\'e bağlan.',
+          '555 #1 çıkışı (pin 3) → 555 #2\'nin pin 2 (Trig)\'ine gönder. #1 süresi dolunca #2 tetiklenir.',
+          '555 #2 (entry delay): R=1MΩ, C=10µF → t≈11sn. Pin 3 çıkışı röle bobin gerilimi ve alarm LED\'i için kullan.',
+          'Röle çıkışına buzzer bağla; 555 #2 HIGH olduğunda buzzer çalışsın.',
+          'Reset/şifre butonu 555 #2\'nin pin 4 (RESET)\'ine bağla — butona basılınca alarm durur.',
+          'Test: KUR → 20sn bekle → kapıyı aç → 10sn içinde şifre girme → alarm çalar.',
+        ]}
+        schematic={<AlarmSchematic />}
       />
 
       <div className="grid lg:grid-cols-12 gap-6">

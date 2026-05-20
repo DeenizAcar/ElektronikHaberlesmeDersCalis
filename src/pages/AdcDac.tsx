@@ -6,6 +6,8 @@ import { PlainCard } from '../components/ui/Card'
 import Slider from '../components/ui/Slider'
 import Glossary from '../components/ui/Glossary'
 import CompleteButton from '../components/ui/CompleteButton'
+import CircuitPanel from '../components/circuit/CircuitPanel'
+import { AdcDacSchematic } from '../components/circuit/AdcDacCircuit'
 
 export default function AdcDac() {
   const [amp, setAmp] = useState(0.8) // 0-1
@@ -18,6 +20,37 @@ export default function AdcDac() {
     const id = window.setInterval(() => setT((x) => x + 0.04), 60)
     return () => window.clearInterval(id)
   }, [])
+
+  const circuitPanel = (
+    <CircuitPanel
+      materials={[
+        { name: 'ADC0804', value: '8-bit SAR ADC, ±5V', qty: 1 },
+        { name: 'DAC0808', value: '8-bit R-2R DAC', qty: 1 },
+        { name: 'LM741 Op-Amp', value: '±15V beslemeli', qty: 1 },
+        { name: 'Potansiyometre', value: '10 kΩ (Vin ayarı)', qty: 1 },
+        { name: 'Direnç', value: '10 kΩ × 8 (DAC R-2R)', qty: 8 },
+        { name: 'Direnç', value: '2.5 kΩ (referans)', qty: 1 },
+        { name: 'Direnç', value: '1 kΩ (LED serisi) × 8', qty: 8 },
+        { name: 'Kapasitör', value: '150 pF (CLK RC)', qty: 1 },
+        { name: 'Elektrolitik', value: '10 µF (bypass)', qty: 2 },
+        { name: 'LED', value: 'Kırmızı 3mm × 8 (D0–D7)', qty: 8 },
+        { name: 'Güç Kaynağı', value: '+5V ve ±15V', qty: 1 },
+        { name: 'Breadboard + Jumper', value: '830 delik', qty: 2 },
+      ]}
+      steps={[
+        'ADC0804\'ü breadboard\'a yerleştir. Pin 20 (+5V), pin 10 (GND).',
+        'CLK: pin 4 (CLK-IN) ile pin 19 (CLK-R) arasına 10kΩ-150pF RC bağla → iç clock.',
+        'CS̄ (pin 1) ve WR̄ (pin 3) GND\'e bağla — sürekli dönüştürme modu.',
+        'RD̄ (pin 2) GND\'e bağla. INTR (pin 5) görmezden gel (polling yerine).',
+        'Vin+ (pin 6) potansiyometre ortasına, Vin- (pin 7) GND\'e bağla.',
+        'Vref/2 (pin 9) boş bırak veya 2.5V\'a bağla (tam 0-5V aralığı için).',
+        'DB0–DB7 (pin 11–18) çıkışlarından LED\'lere 1kΩ seri dirençle bağla → D/A değer görünür.',
+        'DAC0808 için DB0–DB7 çıkışlarını DAC girişlerine bağla; Iout\'u op-amp ile gerilime çevir.',
+        'Op-amp çıkışına osiloskop bağla — ADC′nin örneklediği sinyalin DAC rekonstrüksiyonunu gözlemle.',
+      ]}
+      schematic={<AdcDacSchematic />}
+    />
+  )
 
   // build continuous sine path and sampled points
   const N = 400
@@ -92,6 +125,8 @@ export default function AdcDac() {
         icon={<Activity className="w-6 h-6" />}
         accent="lavender"
       />
+
+      {circuitPanel}
 
       {/* kontroller */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

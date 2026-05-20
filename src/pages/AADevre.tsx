@@ -8,6 +8,8 @@ import Resonance from '../components/simulators/Resonance'
 import Filter from '../components/simulators/Filter'
 import Glossary from '../components/ui/Glossary'
 import CompleteButton from '../components/ui/CompleteButton'
+import CircuitPanel from '../components/circuit/CircuitPanel'
+import { RCLowPass, RLCircuit } from '../components/circuit/RCCircuit'
 
 type Deney = {
   id: string
@@ -96,6 +98,33 @@ export default function AADevre() {
         subtitle="Frekansın gerilimi nasıl değiştirdiğini, rezonansın neden büyülü olduğunu ve filtrelerin günlük hayatımıza nasıl sızdığını görelim."
         icon={<Zap className="w-6 h-6" />}
         accent="blush"
+      />
+
+      <CircuitPanel
+        materials={[
+          { name: 'Osiloskop', value: '2 kanallı, probe × 2', qty: 1 },
+          { name: 'Fonksiyon Jeneratörü', value: '1Hz–1MHz sinüs/kare', qty: 1 },
+          { name: 'Direnç', value: '1 kΩ', qty: 2 },
+          { name: 'Direnç', value: '10 kΩ', qty: 1 },
+          { name: 'Kondansatör', value: '100 nF (0.1µF)', qty: 2 },
+          { name: 'Kondansatör', value: '1 µF', qty: 1 },
+          { name: 'Bobin (Endüktans)', value: '10 mH', qty: 1 },
+          { name: 'Bobin (Endüktans)', value: '100 mH', qty: 1 },
+          { name: 'BNC – BNC Kablo', value: 'Fonksiyon jeneratör çıkışı', qty: 2 },
+          { name: 'Breadboard', value: '830 delik', qty: 1 },
+          { name: 'Jumper Kablo', value: 'M-M', qty: 15 },
+        ]}
+        steps={[
+          'RC LPF (Deney 6): R=1kΩ ve C=100nF\'ı seri bağla. Vin fonksiyon jeneratöründen; Vout C\'nin iki ucundan al.',
+          'fc = 1/(2πRC) ≈ 1.6 kHz → bu frekansta osiloskopla gerilimin 1/√2 düştüğünü doğrula.',
+          'RC HPF (Deney 7): C ve R\'nin yerini değiştir. Düşük frekanslarda gerilim düşer, yükseklerde geçer.',
+          'RL devresi (Deney 2): R ve L seri bağla. f arttıkça XL=2πfL artar, Vout (R üzerindeki) azalır.',
+          'Seri Rezonans (Deney 4): R-L-C seri bağla. f0 = 1/(2π√LC) frekansında akım maksimum, faz 0°.',
+          'Osiloskop Ch1 → Vin, Ch2 → Vout olarak ayarla; frekansı değiştirerek faz farkını gözlemle.',
+          'Bode grafiği: birden fazla frekansta Vout/Vin oranını ölç, dB cinsinden not al ve grafik çiz.',
+        ]}
+        schematic={<RCLowPass />}
+        logic={<RLCircuit />}
       />
 
       <div className="grid lg:grid-cols-12 gap-6">

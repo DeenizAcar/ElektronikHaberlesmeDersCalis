@@ -6,6 +6,8 @@ import { PlainCard } from '../components/ui/Card'
 import Toggle from '../components/ui/Toggle'
 import Glossary from '../components/ui/Glossary'
 import CompleteButton from '../components/ui/CompleteButton'
+import CircuitPanel from '../components/circuit/CircuitPanel'
+import { MuxSchematic, MuxLogic } from '../components/circuit/MuxCircuit'
 
 export default function Mux() {
   const [inputs, setInputs] = useState<boolean[]>(Array(8).fill(false))
@@ -20,6 +22,30 @@ export default function Mux() {
         subtitle="8 girişten birini seçip çıkışa bağlayan küçük bir kanal seçici. 3 select line'la hangi girişi istediğini söylüyorsun."
         icon={<ArrowLeftRight className="w-6 h-6" />}
         accent="mint"
+      />
+
+      <CircuitPanel
+        materials={[
+          { name: '74LS151 IC', value: '8:1 MUX', qty: 1 },
+          { name: 'DIP Switch', value: '3-kanal (S0/S1/S2)', qty: 1 },
+          { name: 'Toggle Switch', value: '5V uyumlu', qty: 8 },
+          { name: 'LED', value: 'Kırmızı/Yeşil 3mm', qty: 2 },
+          { name: 'Direnç', value: '1 kΩ (LED serisi)', qty: 2 },
+          { name: 'Breadboard', value: '830 delik', qty: 1 },
+          { name: 'Jumper Kablo', value: 'M-M', qty: 20 },
+          { name: 'Güç Kaynağı', value: '+5V DC', qty: 1 },
+        ]}
+        steps={[
+          '74LS151\'i breadboard\'a yerleştir; pin 16\'ya +5V, pin 8\'e GND bağla.',
+          'Pin 7 (Enable Ḡ) GND\'e bağla — aktif-low enable, 0 yapınca devre etkin.',
+          'I0–I7 pinlerine (1–4, 12–15) toggle switch veya pull-down\'lı butonlar bağla.',
+          'S0 (pin 11), S1 (pin 10), S2 (pin 9) pinlerine DIP switch bağla.',
+          'Çıkış Y (pin 5) üzerinden 1kΩ dirençle LED bağla, diğer bacağı GND\'e.',
+          'S0-S1-S2\'yi binary olarak 000–111 arasında değiştir, ilgili I0–I7 girişi Y çıkışına gelir.',
+          'W̄ (pin 6) ters çıkış — Y her HIGH olduğunda bu pin LOW olur.',
+        ]}
+        schematic={<MuxSchematic />}
+        logic={<MuxLogic />}
       />
 
       <div className="grid lg:grid-cols-12 gap-6">

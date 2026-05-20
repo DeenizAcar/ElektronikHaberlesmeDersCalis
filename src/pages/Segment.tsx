@@ -8,6 +8,8 @@ import Confetti from '../components/ui/Confetti'
 import Glossary from '../components/ui/Glossary'
 import { segmentTable, segmentsForValue, glyphForValue } from '../data/segmentTable'
 import CompleteButton from '../components/ui/CompleteButton'
+import CircuitPanel from '../components/circuit/CircuitPanel'
+import { SegmentSchematic, SegmentLogic } from '../components/circuit/SegmentCircuit'
 
 export default function Segment() {
   // A = LSB, D = MSB
@@ -56,6 +58,29 @@ export default function Segment() {
         subtitle="Dört bitlik girişin 0-F arası 16 değeri nasıl harf ve rakama dönüştüğünü kendi gözünle gör. Her LED'in mantığı saklı değil — sadece anlatılmamış."
         icon={<Hash className="w-6 h-6" />}
         accent="lavender"
+      />
+
+      <CircuitPanel
+        materials={[
+          { name: '7-Segment Display', value: 'Common Cathode, 1 haneli', qty: 1 },
+          { name: '74LS47 BCD-7Seg Decoder', value: 'veya 4511 (CC uyumlu)', qty: 1 },
+          { name: 'DIP Switch', value: '4 kanal (A B C D giriş)', qty: 1 },
+          { name: 'Direnç', value: '330 Ω × 7 (segment akım sınır)', qty: 7 },
+          { name: 'Breadboard', value: '830 delik', qty: 1 },
+          { name: 'Jumper Kablo', value: 'M-M', qty: 20 },
+          { name: 'Güç Kaynağı', value: '+5V DC', qty: 1 },
+        ]}
+        steps={[
+          '74LS47\'yi breadboard\'a yerleştir. Pin 16 → +5V, Pin 8 → GND.',
+          'LT̄ (pin 3), RBI̊ (pin 4), BI̊/RBO (pin 5) pinlerini +5V\'a bağla — test ve blanking devre dışı.',
+          'DIP switch A(pin 7) B(pin 1) C(pin 2) D(pin 6) girişlerine bağla; switch açık = HIGH (pull-up ile).',
+          '74LS47 çıkışları a(13) b(12) c(11) d(10) e(9) f(15) g(14) — her birinden 330Ω direnç geçirerek 7-seg pin\'lerine bağla.',
+          '7-segment\'in ortak katot (common cathode) pinini GND\'e bağla.',
+          'Switch kombinasyonlarını 0000 → 1001 (0–9) dene; display\'in doğru rakamı gösterdiğini kontrol et.',
+          '1010 (A) → 1111 (F) için display üretici datasheetine bakarak gösterimi doğrula.',
+        ]}
+        schematic={<SegmentSchematic />}
+        logic={<SegmentLogic />}
       />
 
       {/* Üstte hâlihazırdaki giriş */}

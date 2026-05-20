@@ -8,6 +8,8 @@ import SevenSegment from '../components/simulators/SevenSegment'
 import { segmentsForValue } from '../data/segmentTable'
 import Glossary from '../components/ui/Glossary'
 import CompleteButton from '../components/ui/CompleteButton'
+import CircuitPanel from '../components/circuit/CircuitPanel'
+import { SayicilarSchematic } from '../components/circuit/SayicilarCircuit'
 
 type Tab = 'decade' | 'updown' | 'relay'
 
@@ -20,6 +22,32 @@ export default function Sayicilar() {
         subtitle="Decade counter ile 0–999999, sensörlerle yön bilen up/down, ve klasik time relay — üç sekme, üç hikâye."
         icon={<Clock className="w-6 h-6" />}
         accent="peach"
+      />
+
+      <CircuitPanel
+        materials={[
+          { name: '74LS90 Decade Counter', value: 'BCD çıkışlı', qty: 3 },
+          { name: '74LS47 BCD-7Seg Decoder', value: 'Common Anode uyumlu', qty: 3 },
+          { name: '7-Segment Display', value: 'Common Cathode, 1 haneli', qty: 3 },
+          { name: 'NE555 Timer', value: 'Astable mod (clock)', qty: 1 },
+          { name: 'Direnç', value: '330 Ω (segment serisi) × 21', qty: 21 },
+          { name: 'Direnç', value: '10 kΩ, 100 kΩ (555 ayar)', qty: 2 },
+          { name: 'Elektrolitik Kapasitör', value: '10 µF (555 zamanlama)', qty: 1 },
+          { name: 'Breadboard', value: '2× 830 delik', qty: 2 },
+          { name: 'Jumper Kablo', value: 'M-M', qty: 40 },
+          { name: 'Güç Kaynağı', value: '+5V DC 1A', qty: 1 },
+        ]}
+        steps={[
+          '555\'i astable modda kur: Ra=10kΩ, Rb=100kΩ, C=10µF → f≈0.7/(Ra+2Rb)C≈0.5Hz. Yavaş sayım için.',
+          'İlk 74LS90\'ı breadboard\'a koy. Pin 5 (VCC) +5V, pin 10 (GND) GND\'e bağla.',
+          'CKA (pin 14) ve CKB (pin 1) girişlerini bağla: CKA → clock, CKB → QA çıkışına bağlayınca BCD mod.',
+          'QA(12) QB(9) QC(8) QD(11) çıkışlarını 74LS47\'nin A B C D girişlerine bağla.',
+          '74LS47 a-g çıkışlarından her birini 330Ω dirençle 7-segment\'in ilgili segment pinine bağla.',
+          '7-segment\'in common cathode (ortak katot) pinini GND\'e bağla.',
+          'Cascade için: 74LS90 #1\'in QD çıkışını → 74LS90 #2\'nin CKA\'sına bağla. Aynı şekilde #2→#3.',
+          'Tüm sayıcıların R01(6), R02(7), R91(2), R92(3) pinlerini GND\'e bağla (reset devre dışı).',
+        ]}
+        schematic={<SayicilarSchematic />}
       />
 
       <div className="flex gap-2 flex-wrap mb-6">
