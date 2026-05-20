@@ -1,52 +1,50 @@
-# DevreAşkı 🌷
+# Devreleri Anla
 
-Devreleri ezberlemeden, mantığıyla öğreten interaktif çalışma sitesi.
-Ege Üniversitesi Elektronik Haberleşme Teknolojisi laboratuvar deneyleri ve dijital proje konuları için ufak bir sevgi projesi.
+Ege Üniversitesi Elektronik Haberleşme Teknolojisi laboratuvar deneyleri ve dijital proje konuları için interaktif çalışma sitesi.
 
-## İçerik
+🌐 **Canlı site:** [deenizacar.github.io/ElektronikHaberlesmeDersCalis](https://deenizacar.github.io/ElektronikHaberlesmeDersCalis/)
 
-- **AA Devre Analizi** — 7 deney (osiloskop, RL, RC, rezonans, LPF/HPF)
-- **7-Segment Hex Decoder Lab** — interaktif 4-bit giriş ve truth table
-- **8'e-1 Multiplexer Lab** — animasyonlu sinyal yönlendirme
-- **Sayıcılar & Zamanlayıcılar** — 6 digit decade counter, sensörlü up/down, time relay
-- **Alarm Sistemi** — exit/entry delay senaryo simülasyonu
-- **ADC/DAC & PCM** — örnekleme, kuantizasyon, rekonstrüksiyon
-- **Notlar** — Markdown destekli, localStorage'a kaydedilen kişisel notlar
-- **Quiz** — konuya göre filtrelenebilen 25+ soru
+---
+
+## Konular
+
+| Sayfa | İçerik |
+|-------|--------|
+| AA Devre Analizi | Osiloskop, RL, seri RC, seri/paralel rezonans, LPF, HPF — 7 interaktif deney |
+| 7-Segment Hex Decoder | 4-bit toggle girişi, animasyonlu 7-seg display, truth table, quiz modu |
+| Multiplexer Lab | 8'e-1 MUX, select line simülasyonu |
+| Sayıcılar & Zamanlayıcılar | 6-digit decade counter, sensörlü up/down, time relay |
+| Alarm Sistemi | Exit/entry delay senaryo simülasyonu |
+| ADC/DAC & PCM | Örnekleme, kuantizasyon, rekonstrüksiyon, PCM bit stream |
+| Notlar | Markdown destekli, localStorage'a kaydedilen ders notları |
+| Quiz | Konuya göre filtrelenebilen 25+ soru |
 
 ## Tech Stack
 
-- Vite + React 18 + TypeScript (strict)
-- Tailwind CSS (custom pastel palette)
-- Framer Motion (yumuşak animasyonlar)
-- React Router (lazy loaded pages)
-- Recharts (frekans grafikleri)
-- Lucide React (ikonlar)
-- react-markdown (notlar için)
+- **Vite + React 18 + TypeScript** (strict mode)
+- **Tailwind CSS** — özel pastel renk paleti
+- **Framer Motion** — sayfa geçişleri ve animasyonlar
+- **React Router** — lazy loaded sayfalar
+- **Recharts** — frekans ve Bode grafikleri
+- **Lucide React** — ikonlar
+- **react-markdown** — notlar sayfası
 
 ## Kurulum
 
 ```bash
 npm install
 npm run dev
+# http://localhost:5173
 ```
 
-Tarayıcıda: http://localhost:5173
+## Build & Deploy
 
-## Build
+Site `main` branch'e push edildiğinde GitHub Actions otomatik olarak deploy eder.
 
+Manuel build:
 ```bash
-npm run build
-npm run preview
-```
-
-## Deploy (GitHub Pages)
-
-`vite.config.ts`'de `base: './'` ayarlı; `dist/` çıktısını herhangi bir statik hosta yükleyebilirsin. GitHub Pages için:
-
-```bash
-npm run build
-# dist klasörünü gh-pages branch'ine push et
+npm run build   # dist/ klasörünü oluşturur
+npm run preview # build'i lokal önizle
 ```
 
 ## Klasör Yapısı
@@ -54,19 +52,16 @@ npm run build
 ```
 src/
   components/
-    ui/          temel bileşenler (Toggle, Slider, Card, ...)
-    simulators/  her devre simülatörü kendi component'i
-    layout/      Navbar, Footer
-  pages/         route başına 1 sayfa
-  data/          truth tablolar, quiz soruları, mesajlar
-  lib/           progress (localStorage)
-  styles/        global tailwind
+    ui/           Toggle, Slider, Card, Confetti, ...
+    simulators/   Oscilloscope, Filter, Resonance, SevenSegment, ...
+    layout/       Navbar
+  pages/          Her route için ayrı sayfa (lazy loaded)
+  data/           segmentTable, quizQuestions, messages
+  lib/            localStorage progress tracker
+  styles/         Tailwind global CSS
 ```
 
-## Kişiselleştirme
+## Özelleştirme
 
-- Sürpriz mesajlar: `src/data/messages.ts`
-- Tailwind renkleri: `tailwind.config.js`
-- Quiz soruları: `src/data/quizQuestions.ts`
-
-🌸 küçük bir sevgi projesi
+- Quiz soruları → `src/data/quizQuestions.ts`
+- Renk paleti → `tailwind.config.js`
