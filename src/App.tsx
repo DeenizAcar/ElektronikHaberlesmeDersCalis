@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Suspense, lazy } from 'react'
 import Navbar from './components/layout/Navbar'
 import LoadingHeart from './components/ui/LoadingHeart'
+import Login from './pages/Login'
+import { useAuth } from './contexts/AuthContext'
 
 const Home = lazy(() => import('./pages/Home'))
 const AADevre = lazy(() => import('./pages/AADevre'))
@@ -18,6 +20,10 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function App() {
   const location = useLocation()
+  const { session } = useAuth()
+
+  if (!session) return <Login />
+
   return (
     <div className="min-h-screen flex flex-col bg-blobs">
       <Navbar />
